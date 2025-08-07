@@ -52,10 +52,14 @@ import { getBackgroundForWeather } from '@/utils/backgroundUtils';
 
 export default {
   props: {
-    weather: {
+     weather: {
       type: Object,
-      default: null,
-      required: true
+      default: () => ({
+        main: { temp: 0 },
+        weather: [{ description: '' }],
+        wind: { speed: 0 },
+        main: { humidity: 0, pressure: 0 }
+      })
     }
   },
   setup(props) {
@@ -90,7 +94,7 @@ export default {
   border-radius: 20px;
   padding: 25px;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   height: 400px;
   overflow: hidden;
 }

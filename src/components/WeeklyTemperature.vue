@@ -11,11 +11,17 @@
         >
           <div class="slide-content">
             <img :src="day.icon" alt="Weather icon" width="60" height="60">
+            <span class="description">{{ day.description }}</span>
             <div class="day-info">
               <span class="day-name">{{ day.name }}</span>
               <span class="day-number">{{ day.dayNumber }}</span>
             </div>
             <span class="temperature">{{ day.tempMin }}° / {{ day.tempMax }}°C</span>
+            <span class="wind">💨 {{ day.wind_speed }} km/h</span>
+            <div class="rain">
+              🌧️ {{ day.pop > 0 ? `${Math.round(day.pop * 100)}%` : '0%' }}
+              <span v-if="day.rain"> - {{ day.rain }} mm</span>
+            </div>
           </div>
         </div>
       </div>
@@ -24,6 +30,7 @@
   </div>
 </template>
 
+
 <script>
 import { computed, onMounted, ref, watch, nextTick } from 'vue';
 
@@ -31,57 +38,72 @@ export default {
   props: {
     forecast: {
       type: Object,
-      default: () => ({})
+      default: () => ({
+        list: []
+      })
     }
   },
   setup(props) {
-    const dailyForecast = computed(() => {
-      if (!props.forecast || !props.forecast.list || props.forecast.list.length === 0) return [];
+  const dailyForecast = computed(() => {
+  if (!props.forecast || !props.forecast.list || props.forecast.list.length === 0) return [];
 
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const todayKey = today.toISOString().split('T')[0];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  const grouped = {};
+  const uniqueDays = new Set();
 
-      const grouped = {};
+  props.forecast.list.forEach(item => {
+    const date = new Date(item.dt * 1000);
+    const dateKey = date.toLocaleDateString('es-ES');
+    
+    // Solo procesar días actuales/futuros
+    if (date < today) return;
+    
+    if (!grouped[dateKey]) {
+      grouped[dateKey] = {
+        temps: [],
+        items: [],
+        date
+      };
+      uniqueDays.add(dateKey);
+    }
+    
+    grouped[dateKey].temps.push(item.main.temp);
+    grouped[dateKey].items.push(item);
+  });
 
-      props.forecast.list.forEach(item => {
-        const date = new Date(item.dt * 1000);
-        const dateKey = date.toISOString().split('T')[0];
+  return Array.from(uniqueDays).slice(0, 7).map(dateKey => {
+    const group = grouped[dateKey];
+    const minTemp = Math.round(Math.min(...group.temps));
+    const maxTemp = Math.round(Math.max(...group.temps));
+    
+    // Encontrar el item más cercano al mediodía
+    const representativeItem = group.items.reduce((closest, item) => {
+      const itemHour = new Date(item.dt * 1000).getHours();
+      const currentDiff = Math.abs(12 - itemHour);
+      const closestDiff = Math.abs(12 - new Date(closest.dt * 1000).getHours());
+      return currentDiff < closestDiff ? item : closest;
+    }, group.items[0]);
 
-        if (dateKey < todayKey) return;
+    const dayName = group.date.toLocaleDateString('es-ES', { weekday: 'long' });
+    const capitalizedDayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
 
-        if (!grouped[dateKey]) {
-          grouped[dateKey] = {
-            temps: [],
-            icons: [],
-            date,
-          };
-        }
+    return {
+      date: dateKey,
+      name: capitalizedDayName,
+      dayNumber: `${group.date.getDate()} de ${group.date.toLocaleDateString('es-ES', { month: 'long' })}`,
+      dateObj: group.date,
+      tempMin: minTemp,
+      tempMax: maxTemp,
+      icon: `https://openweathermap.org/img/wn/${representativeItem.weather[0].icon}@2x.png`,
+      description: representativeItem.weather[0].description,
+      wind_speed: Math.round(representativeItem.wind.speed * 3.6),
+      pop: representativeItem.pop ?? 0,
+      rain: representativeItem.rain?.['3h'] ?? null
+    };
+  });
 
-        grouped[dateKey].temps.push(item.main.temp);
-        grouped[dateKey].icons.push(item.weather[0].icon);
-      });
-
-      const result = Object.entries(grouped).map(([dateKey, data]) => {
-        const temps = data.temps;
-        const min = Math.min(...temps);
-        const max = Math.max(...temps);
-        
-        const dayName = data.date.toLocaleDateString('es-ES', { weekday: 'long' });
-        const capitalizedDayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
-        
-        return {
-          date: dateKey,
-          name: capitalizedDayName,
-          dayNumber: data.date.getDate(),
-          dateObj: data.date,
-          tempMin: Math.round(min),
-          tempMax: Math.round(max),
-          icon: `https://openweathermap.org/img/wn/${data.icons[0]}@2x.png`,
-        };
-      });
-
-      return result.sort((a, b) => a.dateObj - b.dateObj).slice(0, 7);
     });
 
     const swiperInstance = ref(null);
@@ -179,8 +201,8 @@ h3 {
 .slide-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  gap: 5px;
   height: 100%;
   opacity: 1; 
   transform: none; 

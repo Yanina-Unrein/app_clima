@@ -13,4 +13,21 @@
   font-family: var(--font_body);
 }
 
+::-webkit-scrollbar {
+  width: 8px; /* o height si es horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3); /* color clarito o translúcido */
+  border-radius: 4px;
+}
+
+/* Opcional: al pasar el mouse */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
 

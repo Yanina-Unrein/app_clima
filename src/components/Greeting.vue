@@ -8,9 +8,7 @@
       <h1 class="title">
         {{ greeting }}
       </h1>
-<!--       <transition name="fade">
-        <ImageTime :weather="weather" />
-      </transition> -->
+       <p class="date">{{ currentDate }}</p>
     </div>
   </div>
   
@@ -18,7 +16,6 @@
 
 <script>
 import { computed } from 'vue';
-//import ImageTime from './ImageTime.vue'
 
 export default {
   props: {
@@ -31,9 +28,6 @@ export default {
       default: () => null
     }
   },
-  /* components: {
-    ImageTime 
-  }, */
   setup(props) {
     const greeting = computed(() => {
       const hour = new Date().getHours();
@@ -41,9 +35,20 @@ export default {
       if (hour >= 12 && hour < 19) return 'Buenas tardes';
       return 'Buenas noches';
     });
-    
+
+    const currentDate = computed(() => {
+      const now = new Date();
+      return now.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    });
+
     return {
-      greeting
+      greeting,
+      currentDate
     };
   }
 }
@@ -52,6 +57,7 @@ export default {
 <style scoped>
 .saludo{
   max-width: 600px;
+  padding-left: 10px;
 }
 
 .greeting {
@@ -72,7 +78,7 @@ export default {
   align-items: center;
   gap: 5px;
   font-size: clamp(1rem, 0.7143rem + 1.4286vw, 1.3rem);
-  color: #424242;
+  color: #ffffff;
 }
 
 .icon{
@@ -80,6 +86,14 @@ export default {
   height: 20px;
   padding: 0;
   margin: 0;
+}
+
+.date {
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 0;
+  padding-left: 2px;
+  text-transform: capitalize;
 }
 
 @media(width >= 400px){

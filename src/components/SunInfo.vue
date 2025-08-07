@@ -15,7 +15,12 @@ import { toDisplayString } from '@vue/shared';
 const props = defineProps({
   weather: {
     type: Object,
-    required: true
+      default: () => ({
+        sys: {
+          sunrise: 0,
+          sunset: 0
+        }
+      })
   }
 });
 
@@ -47,7 +52,7 @@ const formatTime = (unix) => {
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    max-width: 500px;
+    max-width: 800px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
     border-radius: 10px;
@@ -56,13 +61,6 @@ const formatTime = (unix) => {
     margin: 0 auto;
 }
 
-.sun-info h3 {
-  color: #696968;
-}
-
-.sun-info p {
-    color: #737374;
-}
 
 .sun-info p .icon-sun {
     width: 40px;

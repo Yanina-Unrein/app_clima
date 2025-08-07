@@ -33,10 +33,11 @@ import { computed } from 'vue';
 
 export default {
   props: {
-    forecast: {
+     forecast: {
       type: Object,
-      default: null,
-      required: true
+      default: () => ({
+        list: []
+      })
     }
   },
   setup(props) {
@@ -49,7 +50,7 @@ export default {
       // Buscar el índice en forecast.list del primer ítem con la hora actual o posterior
       const startIndex = props.forecast.list.findIndex(item => {
         const itemHour = new Date(item.dt * 1000).getHours();
-        return itemHour >= currentHour - 1; // puede ser currentHour o currentHour - 1
+        return itemHour >= currentHour - 1; 
       });
 
       // Si no encuentra una coincidencia, comenzar desde 0
@@ -141,7 +142,7 @@ export default {
   }
 
   .current-hour {
-    background: #4f4f50;
+    background: #ffffff8e;
   }
 
  @media (min-width: 1000px) {
@@ -149,7 +150,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 600px;
+    max-height: 700px;
     overflow-y: auto;
     padding: 0 10px;
   }

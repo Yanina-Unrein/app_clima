@@ -13,9 +13,12 @@ import { getWeatherMessage } from '@/utils/weatherMessages';
 
 export default {
   props: {
-    weather: {
+     weather: {
       type: Object,
-      default: null
+      default: () => ({
+        weather: [{ description: '' }],
+        main: { temp: 0 }
+      })
     }
   },
   setup(props) {
@@ -34,7 +37,7 @@ export default {
 <style scoped>
 .weather-message {
   width: 100%;  
-  max-width: 600px;
+  max-width: 800px;
   margin: 10px auto;
   padding: 20px;
   border-radius: 15px;
