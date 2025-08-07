@@ -4,7 +4,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-   base: '/app_clima/',
+  base: '/',
   plugins: [vue()],
   resolve: {
     alias: {

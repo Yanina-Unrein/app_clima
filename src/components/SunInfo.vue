@@ -61,7 +61,6 @@ const formatTime = (unix) => {
     margin: 0 auto;
 }
 
-
 .sun-info p .icon-sun {
     width: 40px;
     height: 40px;
