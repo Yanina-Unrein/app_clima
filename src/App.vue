@@ -27,7 +27,7 @@
           </div>
         <WeeklyTemperature :forecast="forecast" />
         <div class="footer fade-in">
-          Clima Dinámico &copy; {{ new Date().getFullYear() }}
+          Clima Dinámico &copy; 2025. Página hecha con ❤️ por <a class="footer-link" href="https://yaninaunrein.vercel.app/">Yanina Unrein</a>
         </div>
       </div>
     </div>
@@ -207,6 +207,12 @@ export default {
   padding: 15px;
 }
 
+.footer .footer-link {
+  text-decoration: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
 .fade-in {
   animation: fadeIn 0.8s ease-out;
 }
@@ -253,5 +259,4 @@ export default {
     max-width: 50%; 
   }
 }
-
 </style>
