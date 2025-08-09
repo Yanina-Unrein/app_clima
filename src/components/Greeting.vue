@@ -89,7 +89,7 @@ export default {
 }
 
 .date {
-  font-size: 1rem;
+  font-size: clamp(1.125rem, 0.9107rem + 1.0714vw, 1.875rem);
   color: #ffffff;
   margin: 0;
   padding-left: 2px;
@@ -97,13 +97,7 @@ export default {
 }
 
 @media(width >= 400px){
-  .greeting{
-    flex-direction: row;
-    align-items: center;
-  }
-
   .title{
-    text-align: center;
     font-size: clamp(2.5rem, 2.3846rem + 0.4615vw, 2.2rem);
   }
 }

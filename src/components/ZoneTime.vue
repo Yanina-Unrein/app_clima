@@ -30,6 +30,10 @@
 
       <div class="weather-details">
         <div class="detail">
+          <i class="fas fa-thermometer-half"></i>
+          <span>{{ Math.round(weather.main.feels_like) }}°C</span>
+        </div>
+        <div class="detail">
           <i class="fas fa-wind"></i>
           <span>{{ weather.wind.speed }} km/h</span>
         </div>
@@ -55,7 +59,7 @@ export default {
      weather: {
       type: Object,
       default: () => ({
-        main: { temp: 0 },
+        main: { temp: 0, feels_like: 0 },
         weather: [{ description: '' }],
         wind: { speed: 0 },
         main: { humidity: 0, pressure: 0 }
@@ -160,6 +164,7 @@ export default {
 .weather-details {
   display: flex;
   justify-content: space-evenly;
+  gap:10px;
   width: 100%;
   margin-top: 20px;
 }

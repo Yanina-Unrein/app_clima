@@ -59,14 +59,14 @@ OPENWEATHER_API_KEY=tu_api_key_aqui
 npm run dev
 ``` 
 
-🗂️ Estructura del proyecto
-├── public/
-│   └── assets/             # Imágenes de fondo por clima
-├── src/
-│   ├── components/         # Componentes como WeatherCard.vue, Background.vue, etc.
-│   ├── App.vue             # Componente raíz
-│   └── main.js             # Punto de entrada
-├── .env                    # API Key
-├── README.md
+🗂️ Estructura del proyecto    
+├── public/   
+│   └── assets/              # Imágenes de fondo por clima   
+├── src/   
+│   ├── components/         # Componentes como WeatherCard.vue, Background.vue, etc.   
+│   ├── App.vue             # Componente raíz   
+│   └── main.js             # Punto de entrada   
+├── .env                    # API Key   
+├── README.md   
 
 

@@ -37,7 +37,7 @@ export default {
 <style scoped>
 .search-box {
   display: flex;
-  margin: 5px 0 15px;
+  margin: 5px 5px 15px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 50px;
   overflow: hidden;

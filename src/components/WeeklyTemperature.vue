@@ -239,4 +239,11 @@ h3 {
   bottom: 20px !important;
   transform: scale(1.3);
 }
+
+@media(width >= 1000px){
+  .weather-container{
+    max-width: 100%;
+    margin-top: 50px;
+  }
+}
 </style>

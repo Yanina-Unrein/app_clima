@@ -13,6 +13,7 @@
 
           <div class="forecast-info">
             <span class="temp">{{ hour.temp }}°C</span>
+            <span class="feels">Sensación: {{ hour.feels_like }}°C</span>
             <span class="description">{{ hour.description }}</span>
           </div>
 
@@ -91,14 +92,13 @@ export default {
     /* background: linear-gradient(130.58deg, rgba(0, 0, 0, 0.26) 3.99%, rgba(0, 0, 0, 0.26) 100%);
     backdrop-filter: blur(10px);*/
     border-radius: 10px; 
-    padding: 20px 10px;
+    padding: 20px;
     background-color: rgba(255, 255, 255, 0.144);
     backdrop-filter: blur(10px);
   }
 
   .weather-card h3{
-    font-size: clamp(1rem, 0.7143rem + 1.4286vw, 2rem);
-    color: rgb(40, 40, 85);
+    font-size: 1.8rem;
   }
 
   .forecast-container {
@@ -126,23 +126,22 @@ export default {
     border-radius: 30px;
     scroll-snap-align: start;
     margin-bottom: 8px;
-    color: #4f4f50;
   }
 
   .forecast-info{
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    color: #ffffff;
   }
 
   .temp{
     font-size: 1.2rem;
     font-weight: 600;
-    color: #333;
   }
 
   .current-hour {
-    background: #ffffff8e;
+    background: #a8a3a38e;
   }
 
  @media (min-width: 1000px) {
@@ -163,7 +162,7 @@ export default {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     padding: 12px 16px;
-    color: #333;
+    color: #ffffff;
     box-shadow: 0 0 6px rgba(0,0,0,0.1);
     height: auto;
     width: 100%;
@@ -177,6 +176,7 @@ export default {
   .forecast-info {
     flex: 1;
     padding-left: 12px;
+    gap: 5px;
   }
 
   .temp {
@@ -189,7 +189,7 @@ export default {
   .wind,
   .rain {
     font-size: 0.9rem;
-    color: #555;
+    color: #ffffff;
   }
 
   .forecast-extra {
@@ -199,5 +199,4 @@ export default {
     min-width: 100px;
   }
 }
-
 </style>
